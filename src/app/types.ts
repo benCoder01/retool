@@ -11,6 +11,7 @@ export interface Invoice {
 
 export interface Company {
   id: number;
+  name: string;
   address: Address;
   eMail: string;
   iban: string;
