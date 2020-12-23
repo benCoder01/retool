@@ -1,4 +1,20 @@
-<mat-toolbar color="primary">
-    <span>{{title}}</span>
+<mat-toolbar class="header" color="primary">
+  <span>{{title}}</span>
+  <span class="spacer"></span>
+  <button mat-icon-button class="favorite-icon" routerLink="/home" routerLinkActive="active">
+    <mat-icon>home</mat-icon>
+  </button>
 </mat-toolbar>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav mode="side" class="sidenav" opened>
+    <div class="list-bottom">
+      <mat-nav-list class="list">
+        <a mat-list-item routerLink="/master-records" routerLinkActive="active">Master Records</a>
+      </mat-nav-list>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
 
