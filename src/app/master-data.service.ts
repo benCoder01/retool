@@ -9,23 +9,27 @@ export class MasterDataService {
   emailRegex: RegExp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
 
   constructor() {
+    this.masterData = [];
   }
 
   createRecord(c: Company): number {
     c.id = Date.now();
     if (this.verifyCompany(c)) {
       this.masterData.push(c);
+      return c.id;
     }
-    return c.id;
+    return 0;
   }
 
   getRecordByID(id: number): Company {
+    let company: Company;
+
     this.masterData.forEach(c => {
       if (c.id === id) {
-        return c;
+        company = c;
       }
     });
-    return null;
+    return company;
   }
 
   searchRecordByName(name: string): Company[] {
