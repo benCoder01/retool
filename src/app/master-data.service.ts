@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Address, Company} from './types';
+import {Observable, of} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,19 +10,39 @@ export class MasterDataService {
   emailRegex: RegExp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
 
   constructor() {
-    this.masterData = [];
+    this.masterData = [{
+      name: 'Dummy GmbH',
+      address: {
+        company: 'Test GmbH',
+        careOf: 'Example Person',
+        street: 'Example Street 123',
+        zipcode: '12345',
+        town: 'Example Town',
+        country: 'Germany',
+        postbox: false
+      },
+      eMail: 'buha@testgmbh.de',
+      iban: 'DE35733338154759498353',
+      bankName: 'Test Bank',
+      swift: 'LOYDCHGGZCH',
+      vatId: 'DE 136695978',
+      id: 0,
+    }];
   }
 
-  createRecord(c: Company): number {
+  createRecord(c: Company): Observable<number> {
     c.id = Date.now();
+
+    // TODO: Set Creditor and Debitor numbers!
+
     if (this.verifyCompany(c)) {
       this.masterData.push(c);
-      return c.id;
+      return of(c.id);
     }
-    return 0;
+    return of(0);
   }
 
-  getRecordByID(id: number): Company {
+  getRecordByID(id: number): Observable<Company> {
     let company: Company;
 
     this.masterData.forEach(c => {
@@ -29,10 +50,10 @@ export class MasterDataService {
         company = c;
       }
     });
-    return company;
+    return of(company);
   }
 
-  searchRecordByName(name: string): Company[] {
+  searchRecordByName(name: string): Observable<Company[]> {
     const res: Company[] = [];
 
     this.masterData.forEach(c => {
@@ -41,7 +62,31 @@ export class MasterDataService {
       }
     });
 
-    return res;
+    return of(res);
+  }
+
+  getMasterRecords(): Observable<Company[]> {
+    return of(this.masterData);
+  }
+
+  deleteMasterRecord(c: Company): Observable<number> {
+    for (let i = 0; i < this.masterData.length; i++) {
+      if (c.id === this.masterData[i].id) {
+        this.masterData.splice(i, 1);
+        return of(c.id);
+      }
+    }
+    return of(-1);
+  }
+
+  editMasterRecord(c: Company): Observable<number> {
+    for (let i = 0; i < this.masterData.length; i++) {
+      if (c.id === this.masterData[i].id) {
+        this.masterData[i] = c;
+        return of(c.id);
+      }
+    }
+    return of(-1);
   }
 
   private verifyCompany(c: Company): boolean {

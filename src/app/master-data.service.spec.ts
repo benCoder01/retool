@@ -53,44 +53,51 @@ describe('MasterDataService', () => {
   });
 
   it('should save a new record', () => {
-    const id = service.createRecord(company);
-    expect(id).toBeGreaterThan(0);
+    const id = service.createRecord(company).subscribe((id: number) => {
+      expect(id).toBeGreaterThan(0);
+    });
   });
 
   it('should not save empty record', () => {
-    const id = service.createRecord(emptyCompany);
-    expect(id).toBe(0);
+    service.createRecord(emptyCompany).subscribe((id: number) => {
+      expect(id).toBe(0);
+    });
   });
 
   it('should not save record with wrong iban', () => {
     const ibanTemp = company.iban;
     company.iban = 'DE1234';
-    const id = service.createRecord(company);
-    company.iban = ibanTemp;
-
-    expect(id).toBe(0);
+    service.createRecord(company).subscribe((id: number) => {
+      company.iban = ibanTemp;
+      expect(id).toBe(0);
+    });
   });
 
   it('should not save record with wrong email', () => {
     const eMailTemp = company.eMail;
     company.eMail = 'asdasd@';
-    const id = service.createRecord(company);
-    company.eMail = eMailTemp;
+    service.createRecord(company).subscribe((id: number) => {
+      company.eMail = eMailTemp;
+      expect(id).toBe(0);
+    });
 
-    expect(id).toBe(0);
   });
 
   it('should find record by id', () => {
-    const id = service.createRecord(company);
-    const res = service.getRecordByID(id);
+    service.createRecord(company).subscribe((id: number) => {
+      service.getRecordByID(id).subscribe((res: Company) => {
+        expect(res.name).toBe(company.name);
 
-    expect(res.name).toBe(company.name);
+      });
+    });
   });
 
   it('should find record by first letter of name', () => {
-    const id = service.createRecord(company);
-    const res = service.searchRecordByName(company.name.substr(0, 1));
+    service.createRecord(company).subscribe(() => {
+      service.searchRecordByName(company.name.substr(0, 1)).subscribe((c: Company[]) => {
+        expect(c[0].name).toBe(company.name);
 
-    expect(res[0].name).toBe(company.name);
+      });
+    });
   });
 });
