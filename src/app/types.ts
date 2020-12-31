@@ -12,6 +12,8 @@ export interface Invoice {
 export interface Company {
   id?: number;
   name: string;
+  debitorID?: number;
+  creditorID?: number;
   address: Address;
   eMail: string;
   iban: string;

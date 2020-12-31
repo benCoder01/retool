@@ -39,7 +39,7 @@ export class MasterDataService {
       this.masterData.push(c);
       return of(c.id);
     }
-    return  of(0);
+    return of(0);
   }
 
   getRecordByID(id: number): Observable<Company> {
@@ -67,6 +67,26 @@ export class MasterDataService {
 
   getMasterRecords(): Observable<Company[]> {
     return of(this.masterData);
+  }
+
+  deleteMasterRecord(c: Company): Observable<number> {
+    for (let i = 0; i < this.masterData.length; i++) {
+      if (c.id === this.masterData[i].id) {
+        this.masterData.splice(i, 1);
+        return of(c.id);
+      }
+    }
+    return of(-1);
+  }
+
+  editMasterRecord(c: Company): Observable<number> {
+    for (let i = 0; i < this.masterData.length; i++) {
+      if (c.id === this.masterData[i].id) {
+        this.masterData[i] = c;
+        return of(c.id);
+      }
+    }
+    return of(-1);
   }
 
   private verifyCompany(c: Company): boolean {

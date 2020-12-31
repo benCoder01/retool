@@ -1,1 +1,72 @@
-<p>master-record-list works!</p>
+<div class="table-container">
+  <table mat-table [dataSource]="dataSource" matSort>
+    <div class="table-header">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name</th>
+        <td mat-cell *matCellDef="let comp"> {{comp.name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="eMail">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> E-Mail</th>
+        <td mat-cell *matCellDef="let company"> {{company.eMail}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="iban">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> IBAN</th>
+        <td mat-cell *matCellDef="let company"> {{company.iban}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="debitorID">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Debitor ID</th>
+        <td mat-cell *matCellDef="let company"> {{company.debitorID}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="creditorID">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Creditor ID</th>
+        <td mat-cell *matCellDef="let company"> {{company.creditorID}} </td>
+      </ng-container>
+      <ng-container matColumnDef="edit">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let company">
+          <button mat-icon-button (click)="editCompany(company)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let company">
+          <button mat-icon-button (click)="deleteCompany(company)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+
+    </div>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">No data</td>
+    </tr>
+  </table>
+</div>
+
+
+<div class="bottom-page">
+  <mat-divider></mat-divider>
+  <div class="bottom-row">
+    <mat-form-field class="filter-input" appearance="standard">
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" #input>
+    </mat-form-field>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20, 100]" showFirstLastButtons></mat-paginator>
+  </div>
+</div>
+<button mat-fab class="fab-button">
+  <mat-icon (click)="openCreateDialog()">add</mat-icon>
+</button>
+
