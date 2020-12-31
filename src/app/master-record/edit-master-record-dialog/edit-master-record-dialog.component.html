@@ -1,0 +1,113 @@
+<mat-horizontal-stepper [linear]="true">
+  <mat-step [stepControl]="generalFormGroup" errorMessage="Missing fields">
+    <form [formGroup]="generalFormGroup">
+      <mat-form-field class="form-dialog" appearance="outline">
+        <mat-label>Company name</mat-label>
+        <input autofocus matInput formControlName="nameControl" required>
+        <mat-error *ngIf="generalFormGroup.get('nameControl').invalid">You must enter a value</mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-dialog" appearance="outline">
+        <mat-label>E-Mail</mat-label>
+        <input matInput formControlName="mailControl" required>
+        <mat-error *ngIf="generalFormGroup.get('mailControl').invalid">{{getEmailErrorMessage()}}</mat-error>
+      </mat-form-field>
+      <div mat-dialog-actions class="button-stepper">
+        <div></div>
+        <button mat-stroked-button matStepperNext color="primary">Next</button>
+      </div>
+    </form>
+
+  </mat-step>
+  <mat-step [stepControl]="addressFormGroup" errorMessage="Missing fields">
+    <form [formGroup]="addressFormGroup">
+      <mat-form-field class="form-dialog" appearance="outline" required autofocus>
+        <mat-label>Company name</mat-label>
+        <input matInput formControlName="companyControl">
+        <mat-error *ngIf="addressFormGroup.get('companyControl').invalid">You must enter a value</mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-dialog" appearance="outline">
+        <mat-label>Care Of</mat-label>
+        <input matInput formControlName="careOfControl">
+      </mat-form-field>
+
+      <mat-form-field class="form-dialog" appearance="outline">
+        <mat-label>Street</mat-label>
+        <input matInput formControlName="streetControl" required>
+        <mat-error *ngIf="addressFormGroup.get('streetControl').invalid">You must enter a value</mat-error>
+
+      </mat-form-field>
+
+      <div class="form-dialog-line">
+        <mat-form-field appearance="outline">
+          <mat-label>Zipcode</mat-label>
+          <input matInput formControlName="zipcodeControl" required>
+          <mat-error *ngIf="addressFormGroup.get('zipcodeControl').invalid">You must enter a value</mat-error>
+
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Town</mat-label>
+          <input matInput formControlName="townControl" required>
+          <mat-error *ngIf="addressFormGroup.get('townControl').invalid">You must enter a value</mat-error>
+        </mat-form-field>
+      </div>
+      <mat-form-field class="form-dialog" appearance="outline">
+        <mat-label>Country</mat-label>
+        <input matInput formControlName="countryControl" required>
+        <mat-error *ngIf="addressFormGroup.get('countryControl').invalid">You must enter a value</mat-error>
+
+      </mat-form-field>
+      <div mat-dialog-actions class="button-stepper">
+        <button mat-stroked-button matStepperPrevious>Previous</button>
+        <button mat-stroked-button matStepperNext color="primary">Next</button>
+      </div>
+    </form>
+
+  </mat-step>
+  <mat-step>
+
+    <form [formGroup]="bankFormGroup">
+      <mat-form-field class="form-dialog" appearance="outline" >
+        <mat-label>IBAN</mat-label>
+        <input formControlName="ibanControl" matInput [required]="!bankDisabled">
+        <mat-error *ngIf="bankFormGroup.get('ibanControl').invalid">{{getIbanErrorMessage()}}</mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-dialog" appearance="outline">
+        <mat-label>Swift</mat-label>
+        <input formControlName="swiftControl" matInput [required]="!bankDisabled">
+        <mat-error *ngIf="bankFormGroup.get('swiftControl').invalid">You must enter a value</mat-error>
+
+      </mat-form-field>
+
+      <mat-form-field class="form-dialog" appearance="outline">
+        <mat-label>Bank name</mat-label>
+        <input formControlName="nameControl" matInput [required]="!bankDisabled">
+        <mat-error *ngIf="bankFormGroup.get('nameControl').invalid">You must enter a value</mat-error>
+
+      </mat-form-field>
+
+
+      <mat-form-field class="form-dialog" appearance="outline">
+        <mat-label>VatId</mat-label>
+        <input formControlName="vatIdControl" matInput [required]="!bankDisabled">
+        <mat-error *ngIf="bankFormGroup.get('vatIdControl').invalid">You must enter a value</mat-error>
+      </mat-form-field>
+
+      <div class="button-stepper">
+        <div></div>
+        <mat-slide-toggle [checked]="!bankDisabled" (change)="toggleBank()">
+          Save bank details
+        </mat-slide-toggle>
+      </div>
+
+      <mat-dialog-actions align="end" class="button-stepper">
+        <button mat-stroked-button matStepperPrevious>Previous</button>
+        <button mat-flat-button color="primary" (click)="onFormSubmit()">Submit</button>
+      </mat-dialog-actions>
+
+
+    </form>
+
+
+  </mat-step>
+</mat-horizontal-stepper>
