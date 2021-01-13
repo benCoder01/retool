@@ -2,11 +2,16 @@ export interface Invoice {
   sender: Company;
   recipient: Company;
   invoiceDate: Date;
-  number: string;
+  number: number;
   dateOfService: Date;
   eventName?: Event;
   positions: InvoicePosition[];
   addition: string;
+}
+// TODO: Init Config
+export interface Configuration {
+  invoiceNumberPrefix: string;
+  invoiceNumberSuffixLength: number;
 }
 
 export interface Company {
@@ -43,3 +48,12 @@ export interface Event {
   name: string;
   date: Date;
 }
+
+export interface Pile {
+  id: string; // uuid
+  name: string;
+  invoices: Invoice[];
+}
+
+
+
