@@ -2,13 +2,13 @@ export interface Invoice {
   sender: Company;
   recipient: Company;
   invoiceDate: Date;
-  number: number;
-  dateOfService: Date;
-  eventName?: Event;
+  number: number; // unique id
+  dateOfService: string; // should be string of Dates for longer periods of service
+  eventName?: string;
   positions: InvoicePosition[];
   addition: string;
 }
-// TODO: Init Config
+// TODO: Init Config in Configuration service
 export interface Configuration {
   invoiceNumberPrefix: string;
   invoiceNumberSuffixLength: number;
@@ -42,11 +42,6 @@ export interface Address {
   town: string;
   country: string;
   postbox: boolean; // TODO: Test if fields can be used for postbox
-}
-
-export interface Event {
-  name: string;
-  date: Date;
 }
 
 export interface Pile {
