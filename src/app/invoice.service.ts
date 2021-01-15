@@ -1,16 +1,18 @@
 import {Injectable} from '@angular/core';
-import {Invoice, Pile} from './types';
+import {Invoice, InvoicePosition, Pile} from './types';
 import * as uuid from 'uuid';
 import {Observable, of} from 'rxjs';
+import {MasterDataService} from './master-data.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InvoiceService {
+  // TODO: Test Invoice Service
   piles: Map<string, Pile>;
   pileIDs: string[];
 
-  constructor() {
+  constructor(private masterRecord: MasterDataService) {
   }
 
   createPile(name: string): Observable<string> {
@@ -62,13 +64,12 @@ export class InvoiceService {
   }
 
   private isInvoiceNumberUsed(num: number): boolean {
-    this.piles.forEach((pile: Pile) => {
-      pile.invoices.forEach((invoice: Invoice) => {
-        if (invoice.number === num) {
-          return true;
-        }
-      });
-    });
+    for (let i = 0; i < this.pileIDs.length; i++) {
+      let pile = this.piles.get(this.pileIDs[i]);
+      if (pile.invoices.findIndex(invoice => invoice.number === num) !== -1) {
+        return true;
+      }
+    }
     return false;
   }
 
@@ -77,17 +78,57 @@ export class InvoiceService {
     if (!pile) {
       return of(0);
     }
-
-    pile.invoices.forEach((invoice: Invoice, key: number) => {
-      if (invoice.number === invoiceNumber) {
-        pile.invoices.splice(key, 1);
-        return of(invoiceNumber);
-      }
-    });
-    return of(0);
+    let index = pile.invoices.findIndex(invoice => invoice.number == invoiceNumber);
+    if (index == -1) {
+      return of(undefined);
+    }
+    pile.invoices.splice(index, 1);
+    return of(invoiceNumber);
   }
 
+  updateInvoice(pileID: string, invoiceNumber: number, invoice: Invoice): number {
+    invoice.number = invoiceNumber;
+    let pile: Pile;
+    this.openPile(pileID).subscribe(res => pile = res);
+    if (!pile || !this.verifyInvoice(invoice)) {
+      return 0;
+    }
+
+    let oldIndex = pile.invoices.findIndex(invoice => invoice.number == invoiceNumber);
+    pile.invoices[oldIndex] = invoice;
+    this.piles.set(pileID, pile);
+    return invoiceNumber;
+  }
+
+  getInvoice(invoiceNumber: number, pileID: string): Observable<Invoice> {
+    let pile = this.piles.get(pileID);
+    if (!pile) {
+      return of(undefined);
+    }
+
+    return of(pile.invoices.find(invoice => invoice.number === invoiceNumber));
+  }
+
+
   private verifyInvoice(invoice: Invoice): boolean {
-    return true;
+    let result = true;
+    this.masterRecord.verifyExistance(invoice.sender).subscribe(res => result = result && res);
+    this.masterRecord.verifyExistance(invoice.recipient).subscribe(res => result = result && res);
+    result = result && !this.isInvoiceNumberUsed(invoice.number);
+    result = result && invoice.dateOfService !== '';
+    result = result && this.verifyInvoicePositions(invoice.positions);
+    result = result && invoice.addition !== '';
+    return result;
+  }
+
+  private verifyInvoicePositions(positions: InvoicePosition[]): boolean {
+    if (positions.length === 0) {
+      return false;
+    }
+    let result = true;
+    positions.forEach((position: InvoicePosition) => {
+      result = result && position.name !== '' && position.currency !== '';
+    });
+    return result;
   }
 }
