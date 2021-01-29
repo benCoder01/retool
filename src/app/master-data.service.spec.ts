@@ -2,46 +2,10 @@ import {TestBed} from '@angular/core/testing';
 
 import {MasterDataService} from './master-data.service';
 import {Company} from './types';
+import {company1 as company, emptyCompany} from './dummyData';
 
 describe('MasterDataService', () => {
   let service: MasterDataService;
-  const company: Company = {
-    name: 'Test GmbH',
-    address: {
-      company: 'Test GmbH',
-      careOf: 'Example Person',
-      street: 'Example Street 123',
-      zipcode: '12345',
-      town: 'Example Town',
-      country: 'Germany',
-      postbox: false
-    },
-    eMail: 'buha@testgmbh.de',
-    iban: 'DE35733338154759498353',
-    bankName: 'Test Bank',
-    swift: 'LOYDCHGGZCH',
-    vatId: 'DE 136695978',
-    id: 0,
-  };
-
-  const emptyCompany: Company = {
-    name: '',
-    address: {
-      company: '',
-      careOf: '',
-      street: '',
-      zipcode: '',
-      town: '',
-      country: '',
-      postbox: false
-    },
-    eMail: '',
-    iban: '',
-    bankName: '',
-    swift: '',
-    vatId: '',
-    id: 0,
-  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
