@@ -13,6 +13,8 @@ export class InvoiceService {
   pileIDs: string[];
 
   constructor(private masterRecord: MasterDataService) {
+    this.piles = new Map<string, Pile>();
+    this.pileIDs = [];
   }
 
   createPile(name: string): Observable<string> {
@@ -41,17 +43,24 @@ export class InvoiceService {
     return of('');
   }
 
-  createInvoice(pileId: string, invoice: Invoice): Observable<string> {
+  createInvoice(pileId: string, invoice: Invoice): Observable<number> {
     if (!this.verifyInvoice(invoice)) {
-      return of('');
+      return of(-1);
     }
     const pile = this.piles.get(pileId);
     if (!pile) {
-      return of('');
+      return of(-1);
     }
 
     pile.invoices.push(invoice);
     this.piles.set(pileId, pile);
+
+    return of(invoice.number);
+  }
+
+  generateFullInvoiceNumber(n: number): string {
+    // TODO:
+    return '' + n;
   }
 
   getUnusedInvoiceNumber(): Observable<number> {
@@ -78,8 +87,8 @@ export class InvoiceService {
     if (!pile) {
       return of(0);
     }
-    let index = pile.invoices.findIndex(invoice => invoice.number == invoiceNumber);
-    if (index == -1) {
+    let index = pile.invoices.findIndex(invoice => invoice.number === invoiceNumber);
+    if (index === -1) {
       return of(undefined);
     }
     pile.invoices.splice(index, 1);
@@ -94,14 +103,14 @@ export class InvoiceService {
       return 0;
     }
 
-    let oldIndex = pile.invoices.findIndex(invoice => invoice.number == invoiceNumber);
+    let oldIndex = pile.invoices.findIndex(invoice => invoice.number === invoiceNumber);
     pile.invoices[oldIndex] = invoice;
     this.piles.set(pileID, pile);
     return invoiceNumber;
   }
 
   getInvoice(invoiceNumber: number, pileID: string): Observable<Invoice> {
-    let pile = this.piles.get(pileID);
+    const pile = this.piles.get(pileID);
     if (!pile) {
       return of(undefined);
     }

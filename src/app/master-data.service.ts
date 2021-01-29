@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Address, Company} from './types';
 import {Observable, of} from 'rxjs';
+import {company1, company2} from './dummyData';
 
 @Injectable({
   providedIn: 'root'
@@ -10,24 +11,7 @@ export class MasterDataService {
   emailRegex: RegExp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
 
   constructor() {
-    this.masterData = [{
-      name: 'Dummy GmbH',
-      address: {
-        company: 'Test GmbH',
-        careOf: 'Example Person',
-        street: 'Example Street 123',
-        zipcode: '12345',
-        town: 'Example Town',
-        country: 'Germany',
-        postbox: false
-      },
-      eMail: 'buha@testgmbh.de',
-      iban: 'DE35733338154759498353',
-      bankName: 'Test Bank',
-      swift: 'LOYDCHGGZCH',
-      vatId: 'DE 136695978',
-      id: 0,
-    }];
+    this.masterData = [company2, company1];
   }
 
   createRecord(c: Company): Observable<number> {
@@ -87,6 +71,18 @@ export class MasterDataService {
       }
     }
     return of(-1);
+  }
+
+  // TODO: Write Test for verifyExistance()
+  verifyExistance(c: Company): Observable<boolean> {
+    let equality = false;
+    this.getRecordByID(c.id).subscribe((res: Company) => {
+      // TODO: Compare every property
+      if (res) {
+        equality = (c.name === res.name && c.eMail === res.eMail);
+      }
+    });
+    return of(equality);
   }
 
   private verifyCompany(c: Company): boolean {

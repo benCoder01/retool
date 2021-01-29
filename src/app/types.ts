@@ -6,7 +6,7 @@ export interface Invoice {
   dateOfService: string; // should be string of Dates for longer periods of service
   eventName?: string;
   positions: InvoicePosition[];
-  addition: string;
+  addition: string; // e.g. Order number
 }
 // TODO: Init Config in Configuration service
 export interface Configuration {
