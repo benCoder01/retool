@@ -28,6 +28,11 @@ export class InvoiceService {
     return of(this.piles);
   }
 
+  // TODO: Add Testing
+  getPileIDs(): Observable<string[]> {
+    return of(this.pileIDs);
+  }
+
   openPile(id: string): Observable<Pile> {
     return of(this.piles.get(id));
   }

@@ -12,10 +12,16 @@ import {MasterRecordModule} from './master-record/master-record.module';
 import {MasterRecordListComponent} from './master-record/master-record-list/master-record-list.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
+import {PileViewComponent} from './invoice/pile-view/pile-view.component';
+import {InvoiceModule} from './invoice/invoice.module';
+import {InvoiceListComponent} from './invoice/invoice-list/invoice-list.component';
+
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: '', redirectTo: '/home', pathMatch: 'full'},
-  {path: 'master-records', component: MasterRecordListComponent}
+  {path: 'master-records', component: MasterRecordListComponent},
+  {path: 'piles', component: PileViewComponent, pathMatch: 'full'},
+  {path: 'pile/:id', component: InvoiceListComponent}
 ];
 
 @NgModule({
@@ -32,7 +38,8 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     MasterRecordModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    InvoiceModule
   ],
   providers: [],
   bootstrap: [AppComponent]

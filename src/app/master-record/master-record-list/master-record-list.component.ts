@@ -52,7 +52,6 @@ export class MasterRecordListComponent implements OnInit, AfterViewInit {
 
   openCreateDialog(): void {
     this.dialog.open(CreateMasterRecordDialogComponent, this.createDialogConfig).afterClosed().subscribe(result => {
-      console.log(result);
       if (result === -1) {
         this.snackBar.open('Could not create entry', '', {
           duration: 2000

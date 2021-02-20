@@ -1,0 +1,38 @@
+<div class="pile-list">
+  <mat-card class="pile-card">
+    <button mat-button class="add-pile" (click)="openCreateDialog()">
+      <mat-icon>library_add</mat-icon>
+      Create
+    </button>
+    <mat-divider></mat-divider>
+    <mat-list>
+      <mat-list-item *ngFor="let pile of piles | keyvalue">
+        <div class="item">
+
+        <div>
+          {{pile.value.name}}
+        </div>
+        <div class="item-actions">
+          <a mat-icon-button [routerLink]="['/pile', pile.key]">
+            <mat-icon>launch</mat-icon>
+          </a>
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="openDeleteDialog(pile.value.id, pile.value.name)">
+              <mat-icon>delete</mat-icon>
+              <span>Delete</span>
+            </button>
+          </mat-menu>
+        </div>
+        <mat-divider></mat-divider>
+        </div>
+
+      </mat-list-item>
+    </mat-list>
+
+  </mat-card>
+</div>
+<!--        <a [routerLink]= "['/pile', pile.key]" >{{pile.value.name}}</a>
+-->

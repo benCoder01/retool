@@ -15,8 +15,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatSortModule} from '@angular/material/sort';
-import { DeleteMasterRecordDialogComponent } from './delete-master-record-dialog/delete-master-record-dialog.component';
-import { EditMasterRecordDialogComponent } from './edit-master-record-dialog/edit-master-record-dialog.component';
+import {DeleteMasterRecordDialogComponent} from './delete-master-record-dialog/delete-master-record-dialog.component';
+import {EditMasterRecordDialogComponent} from './edit-master-record-dialog/edit-master-record-dialog.component';
 
 @NgModule({
   declarations: [MasterRecordListComponent, CreateMasterRecordDialogComponent, DeleteMasterRecordDialogComponent, EditMasterRecordDialogComponent],
@@ -26,7 +26,6 @@ import { EditMasterRecordDialogComponent } from './edit-master-record-dialog/edi
     MatButtonModule,
     MatIconModule,
     MatDialogModule,
-    MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
     MatStepperModule,

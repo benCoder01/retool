@@ -7,9 +7,13 @@
 </mat-toolbar>
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav mode="side" class="sidenav" opened>
+    <mat-nav-list class="list-top">
+      <a mat-list-item routerLink="/piles">Piles</a>
+    </mat-nav-list>
     <div class="list-bottom">
+      <mat-divider></mat-divider>
       <mat-nav-list class="list">
-        <a mat-list-item routerLink="/master-records" routerLinkActive="active">Master Records</a>
+        <a mat-list-item routerLink="/master-records">Master Records</a>
       </mat-nav-list>
     </div>
   </mat-sidenav>

@@ -30,7 +30,11 @@
 
 .list-bottom {
   position: absolute;
-  bottom: 0;
+  bottom: 50px;
   left: 0;
   right: 0;
+}
+
+.list-top {
+  padding-top: 0;
 }
