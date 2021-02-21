@@ -15,6 +15,9 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatMenuModule} from '@angular/material/menu';
 import { DeletePileDialogComponent } from './delete-pile-dialog/delete-pile-dialog.component';
+import {MatTableModule} from '@angular/material/table';
+import {MatSortModule} from '@angular/material/sort';
+import {MatPaginatorModule} from '@angular/material/paginator';
 @NgModule({
   declarations: [PileViewComponent, InvoiceListComponent, CreatePileDialogComponent, DeletePileDialogComponent],
   imports: [
@@ -30,7 +33,10 @@ import { DeletePileDialogComponent } from './delete-pile-dialog/delete-pile-dial
     ReactiveFormsModule,
     MatInputModule,
     MatSnackBarModule,
-    MatMenuModule
+    MatMenuModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule
   ],
   entryComponents: [CreatePileDialogComponent, DeletePileDialogComponent]
 })

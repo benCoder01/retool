@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Address, Company} from './types';
 import {Observable, of} from 'rxjs';
-import {company1, company2} from './dummyData';
+import {company1, company2, company3} from './dummyData';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class MasterDataService {
   emailRegex: RegExp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
 
   constructor() {
-    this.masterData = [company2, company1];
+    this.masterData = [company2, company1, company3];
   }
 
   createRecord(c: Company): Observable<number> {

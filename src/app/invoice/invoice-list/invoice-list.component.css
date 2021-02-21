@@ -1,0 +1,32 @@
+table {
+  width: 100%;
+}
+.bottom-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bottom-page {
+  position: absolute;
+  bottom: 0;
+  background-color: white;
+  height: 9%;
+  width: 100%;
+}
+
+.filter-input {
+  margin-top: 5px;
+  margin-left: 10px;
+  width: 25%;
+}
+
+.table-container {
+  height: 91%;
+  overflow: auto;
+}
+
+.fab-button {
+  position: absolute;
+  bottom: 90px;
+  right: 20px;
+}
