@@ -105,7 +105,7 @@ export class CreateMasterRecordDialogComponent implements OnInit {
     });
 
     this.addressFormGroup = new FormGroup({
-      companyControl: new FormControl('', Validators.required),
+        companyControl: new FormControl('', Validators.required),
       careOfControl: new FormControl(''),
       streetControl: new FormControl('', Validators.required),
       zipcodeControl: new FormControl('', Validators.required),

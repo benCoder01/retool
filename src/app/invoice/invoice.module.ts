@@ -14,12 +14,21 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatMenuModule} from '@angular/material/menu';
-import { DeletePileDialogComponent } from './delete-pile-dialog/delete-pile-dialog.component';
+import {DeletePileDialogComponent} from './delete-pile-dialog/delete-pile-dialog.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {CreateInvoiceDialogComponent} from './create-invoice-dialog/create-invoice-dialog.component';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MAT_DATE_LOCALE, MatNativeDateModule} from '@angular/material/core';
+
 @NgModule({
-  declarations: [PileViewComponent, InvoiceListComponent, CreatePileDialogComponent, DeletePileDialogComponent],
+  providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'de-DE'}
+  ],
+  declarations: [PileViewComponent, InvoiceListComponent, CreatePileDialogComponent, DeletePileDialogComponent, CreateInvoiceDialogComponent],
   imports: [
     CommonModule,
     MatCardModule,
@@ -36,9 +45,13 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     MatMenuModule,
     MatTableModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatStepperModule,
+    MatAutocompleteModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
-  entryComponents: [CreatePileDialogComponent, DeletePileDialogComponent]
+  entryComponents: [CreatePileDialogComponent, DeletePileDialogComponent, CreateInvoiceDialogComponent]
 })
 export class InvoiceModule {
 }

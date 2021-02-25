@@ -6,6 +6,9 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {invoice1, invoice2} from '../../dummyData';
+import {CreateInvoiceDialogComponent} from '../create-invoice-dialog/create-invoice-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-invoice-list',
@@ -22,7 +25,7 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private route: ActivatedRoute, private invoiceService: InvoiceService) {
+  constructor(private route: ActivatedRoute, private invoiceService: InvoiceService, private dialogService: MatDialog, private snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -36,7 +39,7 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.filterPredicate = (data, filter: string)  => {
+    this.dataSource.filterPredicate = (data, filter: string) => {
       const accumulator = (currentTerm, key) => {
         return this.nestedFilterCheck(currentTerm, data, key);
       };
@@ -49,8 +52,10 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
 
     this.dataSource.sortingDataAccessor = (invoice: Invoice, property: string) => {
       switch (property) {
-        case 'recipientName': return invoice.recipient.name;
-        default: return invoice[property];
+        case 'recipientName':
+          return invoice.recipient.name;
+        default:
+          return invoice[property];
       }
     };
     this.dataSource.sort = this.sort;
@@ -65,11 +70,21 @@ export class InvoiceListComponent implements OnInit, AfterViewInit {
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-    console.log(this.dataSource);
   }
 
   openCreateDialog(): void {
-
+    this.dialogService.open(CreateInvoiceDialogComponent, {
+      height: '650px',
+      width: '600px',
+    }).afterClosed().subscribe((result: number) => {
+      if (result === -1) {
+        this.snackBar.open('Could not create entry', '', {
+          duration: 2000
+        });
+      } else {
+        this.refresh();
+      }
+    });
   }
 
   openEditDialog(invoice: Invoice): void {

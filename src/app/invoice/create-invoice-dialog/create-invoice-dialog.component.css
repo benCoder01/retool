@@ -1,0 +1,9 @@
+.form-dialog {
+  width: 100%;
+}
+
+.dialog-actions {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}

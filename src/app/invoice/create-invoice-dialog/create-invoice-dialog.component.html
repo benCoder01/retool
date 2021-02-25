@@ -1,0 +1,59 @@
+<mat-horizontal-stepper [linear]="true" label="General Information">
+  <mat-step [stepControl]="generalFormGroup" errorMessage="Missing fields">
+    <form [formGroup]="generalFormGroup">
+      <mat-form-field appearance="outline" class="form-dialog">
+        <mat-label>Sender</mat-label>
+        <input [matAutocomplete]="sender" formControlName="senderControl" matInput required>
+        <mat-error *ngIf="generalFormGroup.get('senderControl').invalid">You must enter a value</mat-error>
+        <mat-autocomplete #sender="matAutocomplete" [displayWith]="displayCompanyFn">
+          <mat-option *ngFor="let c of filteredSender | async" [value]="c">
+            {{c.name}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="form-dialog">
+        <mat-label>Recipient</mat-label>
+        <input [matAutocomplete]="receiver" formControlName="receiverControl" matInput required>
+        <mat-error *ngIf="generalFormGroup.get('receiverControl').invalid">You must enter a value</mat-error>
+        <mat-autocomplete #receiver="matAutocomplete" [displayWith]="displayCompanyFn">
+          <mat-option *ngFor="let c of filteredReceiver| async" [value]="c">
+            {{c.name}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="form-dialog">
+        <mat-label>Date</mat-label>
+        <input (focus)="date.open()" [matDatepicker]="date" formControlName="dateControl" matInput required>
+        <mat-error *ngIf="generalFormGroup.get('dateControl').invalid">You must enter a value</mat-error>
+        <mat-datepicker-toggle [for]="date" matSuffix></mat-datepicker-toggle>
+        <mat-datepicker #date></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="form-dialog">
+        <mat-label>Date of Service</mat-label>
+        <input formControlName="dateOfServiceControl" matInput required>
+        <mat-error *ngIf="generalFormGroup.get('dateOfServiceControl').invalid">You must enter a value</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="form-dialog">
+        <mat-label>Number</mat-label>
+        <input formControlName="numberControl" matInput type="number" required>
+        <mat-error *ngIf="generalFormGroup.get('dateOfServiceControl').hasError('required')">You must enter a value</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="form-dialog">
+        <mat-label>Addition</mat-label>
+        <input formControlName="additionControl" matInput>
+      </mat-form-field>
+      <mat-dialog-actions class="dialog-actions">
+        <div></div>
+        <button color="primary" matStepperNext mat-stroked-button>Next</button>
+      </mat-dialog-actions>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="positionsFormGroup" errorMessage="Missing fields">
+    <form [formGroup]="positionsFormGroup">
+
+    </form>
+  </mat-step>
+
+
+</mat-horizontal-stepper>
